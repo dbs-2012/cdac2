@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JSXGraph template</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"
+      charset="UTF-8"
+    ></script>
+
+    <!-- The next line is optional: MathJax -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+      id="MathJax-script"
+      async
+    ></script>
+  </head>
+
+  <body>
+    <div class="left-sidebar-container">
+      <div class="left-sidebar">
+        <div class="steps-slideshow-container">
+          <div class="step-number">Step <span id="count"></span></div>
+          <div class="steps-container">
+            <span id="step"></span>
+          </div>
+        </div>
+        <div class="left-sidebar-buttons">
+          <div class="prev">
+            <!-- <button class="side-buttons" onclick="displayPrev()">Prev</button> -->
+          </div>
+          <div class="next">
+            <button id="next" class="side-buttons" onclick="displayNext()">
+              Next
+            </button>
+          </div>
+        </div>
+        <button type="button" class="collapsible">View All Steps</button>
+        <div class="content">
+          <p>
+            <b>Step 1 : </b>Input the values of x and y coordinates of the three
+            vertices of the triangle in the specified fields. <br /><b
+              >Step 2 : </b
+            >Once all coordinates have been entered click on the draw triangle
+            button to get the triangle on the graph. <br /><b>Step 3 : </b>Click
+            on the points of the base of the triangle to get a line parallel to
+            the base. <br /><b>Step 4 : </b>Drag the line drawn on the base
+            parallel to base to divide the sides of the triangle. <br /><b
+              >Step 5 : </b
+            >Click on the Use scale button to get the scale on the graph.
+            <br /><b>Step 6 : </b>Utilize the ruler to measure the lengths of
+            the sides divided by the parallel line. Take note of these lengths.
+            <br /><b>Step 7 : </b>Utilize the measured side lengths to calculate
+            the ratio between the bisected sides. <br /><b>Step 8 : </b>Use
+            Click on the "Calculate Ratio" button to obtain the ratios.
+            Input the lengths calculated by you and Click Show Ratio. Compare it with the actual result. If they do not
+            match, there might be an error in the calculation. Retry by
+            recalculating the lengths and ratio using the scale until you get a
+            match.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div className="middle-bar">
+      <div class="sim-container">
+        <div class="sim-display-container">
+          <div id="jxgbox" class="jxgbox" style="aspect-ratio: 1/1"></div>
+        </div>
+
+        <div class="sim-calculations">
+          <div class="sim-table-container">
+            <div class="sim-table" id="sim-tab">
+              <div class="sim-final-calculated-ratio-text">
+                Hence, The parallel line divides the sides in equal ratios, thus
+                proving the Thale's Theorem:
+              </div>
+              <div class="sim-final-calculation">
+                <div class="sim-final">
+                  <div class="sim-final-calculated firstRatio">PA / AQ</div>
+                  <div class="sim-final-calculated">PB / BR</div>
+                </div>
+                <div class="sim-final-equal">=</div>
+                <div class="sim-final">
+                  <div
+                    class="sim-final-calculated-ratio firstRatio"
+                    id="ratio1"
+                  ></div>
+                  <div class="sim-final-calculated-ratio" id="ratio2"></div>
+                </div>
+              </div>
+              <div class="sim-inputs-container">
+                <div class="sim-inputs-cont">
+                  <div class="sim-inputs-container-labels">
+                    <label for="sideLength1">PA:</label>
+                    <input type="number" id="sideLength1" class="sim-inputs" />
+                  </div>
+                  <div class="sim-inputs-container-labels">
+                    <label for="sideLength2">AQ:</label>
+                    <input type="number" id="sideLength2" class="sim-inputs" />
+                  </div>
+                </div>
+                <div class="sim-inputs-cont">
+                  <div class="sim-inputs-container-labels">
+                    <label for="sideLength3">PB:</label>
+                    <input type="number" id="sideLength3" class="sim-inputs" />
+                  </div>
+                  <div class="sim-inputs-container-labels">
+                    <label for="sideLength4">BR:</label>
+                    <input type="number" id="sideLength4" class="sim-inputs" />
+                  </div>
+                </div>
+              </div>
+              <div class="calculateRatioButton">
+                <button
+                  class="simulator-button"
+                  id="calculateRatioButton"
+                  onclick="calculateUserRatio()"
+                >
+                  Show Ratio
+                </button>
+              </div>
+              <div class="sim-final-calculation">
+                <div class="sim-final">
+                  <div class="sim-final-calculated firstRatio">PA / AQ</div>
+                  <div class="sim-final-calculated">PB / BR</div>
+                </div>
+                <div class="sim-final-equal">=</div>
+                <div class="sim-final">
+                  <div class="sim-final-calculated-ratio" id="ratio1-cal"></div>
+                  <div class="sim-final-calculated-ratio" id="ratio2-cal"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="coordinates">
+            <div class="point-names">P :</div>
+            <div class="points">
+              <div class="point-coordinates">
+                <label>X :</label>
+                <input
+                  type="number"
+                  id="point1X"
+                  onchange="updatevalues()"
+                  min="0"
+                  max="10"
+                  class="sim-inputs"
+                />
+              </div>
+              <div class="point-coordinates">
+                <label>Y :</label>
+                <input
+                  type="number"
+                  id="point1Y"
+                  onchange="updatevalues()"
+                  min="0"
+                  max="10"
+                  class="sim-inputs"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="coordinates">
+            <div class="point-names">Q :</div>
+            <div class="points">
+              <div class="point-coordinates">
+                <label>X :</label>
+                <input
+                  type="number"
+                  id="point2X"
+                  onchange="updatevalues()"
+                  min="0"
+                  max="10"
+                  class="sim-inputs"
+                />
+              </div>
+              <div class="point-coordinates">
+                <label>Y :</label>
+                <input
+                  type="number"
+                  id="point2Y"
+                  onchange="updatevalues()"
+                  min="0"
+                  max="10"
+                  class="sim-inputs"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="coordinates">
+            <div class="point-names">R :</div>
+            <div class="points">
+              <div class="point-coordinates">
+                <label>X :</label>
+                <input
+                  type="number"
+                  id="point3X"
+                  onchange="updatevalues()"
+                  min="0"
+                  max="10"
+                  class="sim-inputs"
+                />
+              </div>
+              <div class="point-coordinates">
+                <label>Y :</label>
+                <input
+                  type="number"
+                  id="point3Y"
+                  onchange="updatevalues()"
+                  min="0"
+                  max="10"
+                  class="sim-inputs"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="sim-buttons">
+            <div id="drawButton">
+              <button
+                id="draw-btn"
+                class="simulator-button"
+                onclick="drawtriangle()"
+              >
+                Draw Triangle
+              </button>
+            </div>
+            <div class="sim-ratios">
+              <div class="btn-calculation">
+                <button
+                  id="ratio-btn"
+                  class="simulator-button"
+                  onclick="calculateratio()"
+                >
+                  Calculate Ratio
+                </button>
+              </div>
+              <div class="btn-calculation">
+                <button
+                  id="scale-btn"
+                  class="simulator-button"
+                  onclick="showScale()"
+                >
+                  Use Scale
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      let currentStep = 0;
+
+      // // Function to update the calculated ratios
+      // function updateRatios() {
+      //   // Read intercepted side lengths from input fields
+      //   let sideLength1 = parseFloat(document.getElementById("sideLength1").value);
+      //   let sideLength2 = parseFloat(document.getElementById("sideLength2").value);
+      //   let sideLength3 = parseFloat(document.getElementById("sideLength3").value);
+      //   let sideLength4 = parseFloat(document.getElementById("sideLength4").value);
+
+      //   // Perform the ratio calculation using intercepted side lengths
+      //   let ratio1cal = sideLength1 / sideLength2;
+      //   let ratio2cal = sideLength3 / sideLength4;
+
+      //   // Display the calculated ratios
+      //   document.getElementById("ratio1-cal").innerHTML = ratio1cal.toFixed(2);
+      //   document.getElementById("ratio2-cal").innerHTML = ratio2cal.toFixed(2);
+      // }
+
+      // // Call updateRatios initially to set the initial values
+      // updateRatios();
+      // Function to calculate and display the ratios
+      function calculateUserRatio() {
+        // Read intercepted side lengths from input fields
+        let sideLength1 = parseFloat(
+          document.getElementById("sideLength1").value
+        );
+        let sideLength2 = parseFloat(
+          document.getElementById("sideLength2").value
+        );
+        let sideLength3 = parseFloat(
+          document.getElementById("sideLength3").value
+        );
+        let sideLength4 = parseFloat(
+          document.getElementById("sideLength4").value
+        );
+
+        // Check if any of the fields are empty
+        if (
+          isNaN(sideLength1) ||
+          isNaN(sideLength2) ||
+          isNaN(sideLength3) ||
+          isNaN(sideLength4)
+        ) {
+          alert("Please enter all side lengths.");
+          return;
+        }
+
+        // Perform the ratio calculation using intercepted side lengths
+        let ratio1cal = sideLength1 / sideLength2;
+        let ratio2cal = sideLength3 / sideLength4;
+
+        // Display the calculated ratios
+        document.getElementById("ratio1-cal").innerHTML = ratio1cal.toFixed(2);
+        document.getElementById("ratio2-cal").innerHTML = ratio2cal.toFixed(2);
+
+        // Disable the button after calculating ratios
+        document.getElementById("calculateRatioButton").disabled = true;
+      }
+
+      // Function to enable the button if all side lengths are entered
+      function checkSideLengths() {
+        let sideLength1 = document.getElementById("sideLength1").value;
+        let sideLength2 = document.getElementById("sideLength2").value;
+        let sideLength3 = document.getElementById("sideLength3").value;
+        let sideLength4 = document.getElementById("sideLength4").value;
+
+        // Enable the button if all side lengths are entered
+        if (sideLength1 && sideLength2 && sideLength3 && sideLength4) {
+          document.getElementById("calculateRatioButton").disabled = false;
+        } else {
+          document.getElementById("calculateRatioButton").disabled = true;
+        }
+      }
+
+      // Attach onchange event listener to each input field to check if all side lengths are entered
+      document
+        .getElementById("sideLength1")
+        .addEventListener("input", checkSideLengths);
+      document
+        .getElementById("sideLength2")
+        .addEventListener("input", checkSideLengths);
+      document
+        .getElementById("sideLength3")
+        .addEventListener("input", checkSideLengths);
+      document
+        .getElementById("sideLength4")
+        .addEventListener("input", checkSideLengths);
+
+      const steps = [
+        "Input the values of x and y coordinates of the three vertices of the triangle in the specified fields",
+        "Once all coordinates have been entered click on the draw triangle button to get the triangle on the graph.",
+        "Click on the points of the base of the triangle to get a line parallel to the base.",
+        "Drag the line drawn on the base parallel to base to divide the sides of the triangle.",
+        "Click on the Use scale button to get the scale on the graph.",
+        "Utilize the ruler to measure the lengths of the sides divided by the parallel line. Take note of these lengths.",
+        "Utilize the measured side lengths to calculate the ratio between the bisected sides.",
+        "Click on the Calculate Ratio button to obtain the ratios.Input the lengths calculated by you and Click Show Ratio. Compare it with the actual result. If they do not match, there might be an error in the calculation. Retry byrecalculating the lengths and ratio using the scale until you get a match.",
+      ];
+
+      let step = steps[0];
+      let btn = false;
+
+      incrementStep();
+      function displayNext() {
+        if (currentStep < steps.length - 1) {
+          currentStep++;
+          step = steps[currentStep];
+        } else document.getElementById("next").innerText = "Completed!";
+        document.getElementById("count").innerText = currentStep + 1;
+        document.getElementById("step").innerText = step;
+        incrementStep();
+      }
+
+      function displayPrev() {
+        if (currentStep > 0) {
+          currentStep--;
+          step = steps[currentStep];
+        }
+        document.getElementById("count").innerText = currentStep + 1;
+        document.getElementById("step").innerText = step;
+      }
+      document.getElementById("count").innerText = currentStep + 1;
+      document.getElementById("step").innerText = step;
+      // Initialize the JSXGraph board
+      let scale = false;
+      var board = JXG.JSXGraph.initBoard("jxgbox", {
+        boundingbox: [-1, 1, 15, -1],
+        axis: true,
+        showCopyright: false,
+        pan: { enabled: true, needshift: false },
+        keepaspectratio: true,
+      });
+
+      function incrementStep() {
+        // Enable or disable inputs based on the current step value
+        document.getElementById("point1X").disabled = true;
+        document.getElementById("point1Y").disabled = true;
+        document.getElementById("point2X").disabled = true;
+        document.getElementById("point2Y").disabled = true;
+        document.getElementById("point3X").disabled = true;
+        document.getElementById("point3Y").disabled = true;
+        document.getElementById("draw-btn").disabled = true;
+        document.getElementById("ratio-btn").disabled = true;
+        document.getElementById("scale-btn").disabled = true;
+
+        if (currentStep == 0) {
+          document.getElementById("point1X").disabled = false;
+          document.getElementById("point1Y").disabled = false;
+          document.getElementById("point2X").disabled = false;
+          document.getElementById("point2Y").disabled = false;
+          document.getElementById("point3X").disabled = false;
+          document.getElementById("point3Y").disabled = false;
+        }
+        if (currentStep == 1) {
+          document.getElementById("draw-btn").disabled = false;
+        }
+        if (currentStep >= 4) {
+          document.getElementById("scale-btn").disabled = false;
+        }
+        if (currentStep == 7) {
+          document.getElementById("ratio-btn").disabled = false;
+        }
+        // Add more conditions for additional steps
+      }
+
+      var coll = document.getElementsByClassName("collapsible");
+      var i;
+
+      for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+          this.classList.toggle("active");
+          var content = this.nextElementSibling;
+          if (content.style.display === "block") {
+            content.style.display = "none";
+          } else {
+            content.style.display = "block";
+          }
+        });
+      }
+
+      function showScale() {
+        if (!scale) {
+          var urlImg = "./scale.jpg";
+
+          var p0 = board.create("point", [3, 1], {
+            size: 5,
+            name: "offset",
+            opacity: 0.3,
+          });
+
+          var p1 = board.create("point", [3, 0], {
+            size: 5,
+            name: "rotate",
+            opacity: 0.3,
+          });
+          var im = board.create("image", [urlImg, [0, 0], [15.7, 1.5]], {
+            fixed: true,
+            name: "image",
+          });
+          var li = board.create("segment", [p0, p1], { dash: 2 });
+
+          var tOff = board.create(
+            "transform",
+            [
+              function () {
+                return p0.X();
+              },
+              function () {
+                return p0.Y();
+              },
+            ],
+            { type: "translate" }
+          );
+          tOff.bindTo(im);
+          tOff.bindTo(p1);
+
+          var tRot = board.create(
+            "transform",
+            [
+              function () {
+                return Math.atan2(p1.Y() - p0.Y(), p1.X() - p0.X());
+              },
+              p0,
+            ],
+            { type: "rotate" }
+          );
+          tRot.bindTo(im);
+
+          board.update();
+          scale = true;
+        } else {
+          var p0 = board.select("offset");
+          var p1 = board.select("rotate");
+          var im = board.select("image");
+
+          // Remove them from the board
+          board.removeObject([p0, p1, im]);
+          scale = false;
+        }
+      }
+
+      //Initialize all the triangle points
+
+      let all_points = {
+        x1: 0,
+        x2: 0,
+        x3: 0,
+        y1: 0,
+        y2: 0,
+        y3: 0,
+      };
+
+      let p1, p2, p3;
+
+      function updatevalues() {
+
+        all_points.x1 = parseInt(document.getElementById("point1X").value);
+        all_points.y1 = parseInt(document.getElementById("point1Y").value);
+        all_points.x2 = parseInt(document.getElementById("point2X").value);
+        all_points.y2 = parseInt(document.getElementById("point2Y").value);
+        all_points.x3 = parseInt(document.getElementById("point3X").value);
+        all_points.y3 = parseInt(document.getElementById("point3Y").value);
+
+      }
+
+      let triangle;
+      let sides;
+
+      function drawtriangle() {
+        if (triangle) {
+          board.removeObject([triangle, p1, p2, p3]);
+        }
+
+        p1 = board.create("point", [all_points.x1, all_points.y1], {
+          name: "P",
+          size: 4,
+          color: "red",
+          attractToGrid: true,
+          attractorDistance: 10,
+          fixed: true,
+        });
+        p2 = board.create("point", [all_points.x2, all_points.y2], {
+          name: "Q",
+          size: 4,
+          color: "red",
+          fixed: true,
+        });
+        p3 = board.create("point", [all_points.x3, all_points.y3], {
+          name: "R",
+          size: 4,
+          color: "red",
+          fixed: true,
+        });
+
+        triangle = board.create("polygon", [p1, p2, p3], {
+          fillColor: "lightblue",
+          borders: { visible: true },
+          hasInnerPoints: false,
+        });
+        console.log("traingele",triangle);
+
+        selectbase();
+        tri = document.getElementById("draw-btn");
+        tri.className = "disableButton";
+      }
+
+      let highlightStyle = {
+        strokeColor: "red",
+        strokeWidth: 3,
+      };
+
+      let selectedBase = null;
+      let p;
+      let intersection1;
+      let intersection2;
+
+      function selectbase() {
+        sides = triangle.borders;
+        console.log("SIdeassss",sides);
+
+        for (var i = 0; i < sides.length; i++) {
+          sides[i].on("down", function () {
+            if (selectedBase == null) {
+              this.setAttribute(highlightStyle);
+              selectedBase = this;
+              for (var j = 0; j < sides.length; j++) {
+                p1.setAttribute({ fixed: true });
+                p2.setAttribute({ fixed: true });
+                p3.setAttribute({ fixed: true });
+              }
+              parallelline();
+            }
+          });
+        }
+      }
+
+      let intersection_points = {
+        x1: 0,
+        y1: 0,
+        x2: 0,
+        y2: 0,
+      };
+      let label1;
+      let label2;
+      let vertex;
+
+      function parallelline() {
+        p = board.create(
+          "line",
+          [
+            [selectedBase.point1.X(), selectedBase.point1.Y()],
+            [selectedBase.point2.X(), selectedBase.point2.Y()],
+          ],
+          {
+            strokeColor: "green",
+            strokeWidth: 2,
+            fixed: false,
+            dash: 2,
+          }
+        );
+
+        remaining_base = [];
+        for (let k = 0; k < sides.length; k++) {
+          if (sides[k] != selectedBase) {
+            remaining_base.push(sides[k]);
+          }
+        }
+
+        console.log("baseee",remaining_base);
+
+        intersection1 = board.create("intersection", [p, remaining_base[0], 0]);
+        intersection2 = board.create("intersection", [p, remaining_base[1], 0]);
+        intersection_points.x1 = intersection1.X();
+        intersection_points.y1 = intersection1.Y();
+        intersection_points.x2 = intersection2.X();
+        intersection_points.y2 = intersection2.Y();
+        label1 = board.create(
+          "text",
+          [intersection_points.x1, intersection_points.y1, "A"],
+          { anchorX: "right", anchorY: "bottom", fixed: true }
+        );
+        label2 = board.create(
+          "text",
+          [intersection_points.x2, intersection_points.y2, "B"],
+          { anchorX: "right", anchorY: "top", fixed: true }
+        );
+
+        p.on("drag", function () {
+          updateIntersectionPoints();
+        });
+      }
+
+      function updateIntersectionPoints() {
+        intersection1.remove();
+        intersection2.remove();
+        label1.remove();
+        label2.remove();
+
+        intersection1 = board.create("intersection", [p, remaining_base[0], 0]);
+        intersection2 = board.create("intersection", [p, remaining_base[1], 0]);
+        intersection_points.x1 = intersection1.X();
+        intersection_points.y1 = intersection1.Y();
+        intersection_points.x2 = intersection2.X();
+        intersection_points.y2 = intersection2.Y();
+        label1 = board.create(
+          "text",
+          [intersection_points.x1, intersection_points.y1, "A"],
+          { fixed: true, anchorX: "right", anchorY: "bottom" }
+        );
+        label2 = board.create(
+          "text",
+          [intersection_points.x2, intersection_points.y2, "B"],
+          { fixed: true, anchorX: "right", anchorY: "top" }
+        );
+
+        // console.log(intersection_points);
+      }
+
+      function calculateratio() {
+        //calculate vertex
+
+        if (!p1.isOn(selectedBase)) {
+          vertex = { x: all_points.x1, y: all_points.y1 };
+        } else if (!p2.isOn(selectedBase)) {
+          vertex = { x: all_points.x2, y: all_points.y2 };
+        } else if (!p3.isOn(selectedBase)) {
+          vertex = { x: all_points.x3, y: all_points.y3 };
+        }
+        // console.log(vertex);
+
+        let Base_of_A;
+        let Base_of_B;
+
+        // console.log(intersection1);
+
+        sides = triangle.borders;
+
+        //calculation which point is on which side
+        for (let i = 0; i < sides.length; i++) {
+          if (
+            sides[i].hasPoint(
+              intersection1.coords.scrCoords[1],
+              intersection1.coords.scrCoords[2]
+            )
+          ) {
+            Base_of_A = sides[i];
+          }
+          if (
+            sides[i].hasPoint(
+              intersection2.coords.scrCoords[1],
+              intersection2.coords.scrCoords[2]
+            )
+          ) {
+            Base_of_B = sides[i];
+          }
+        }
+
+        // console.log(Base_of_A);
+
+        Int_of_A_with_base = board.create(
+          "intersection",
+          [selectedBase, Base_of_A, 0],
+          { name: "" }
+        );
+
+        Int_of_B_with_base = board.create(
+          "intersection",
+          [selectedBase, Base_of_B, 0],
+          { name: "" }
+        );
+        console.log(Int_of_A_with_base);
+
+        let A_to_vertex;
+        let B_to_vertex;
+
+        A_to_vertex = JXG.Math.Geometry.distance(
+          [intersection_points.x1, intersection_points.y1],
+          [vertex.x, vertex.y]
+        );
+        //console.log(A_to_vertex);
+
+        B_to_vertex = JXG.Math.Geometry.distance(
+          [intersection_points.x2, intersection_points.y2],
+          [vertex.x, vertex.y]
+        );
+
+        let A_to_base;
+        let B_to_base;
+        let A = [intersection_points.x1, intersection_points.y1];
+        let B = [intersection_points.x2, intersection_points.y2];
+
+        let endpoint1_of_base = [
+          Int_of_A_with_base.coords.usrCoords[1],
+          Int_of_A_with_base.coords.usrCoords[2],
+        ];
+        let endpoint2_of_base = [
+          Int_of_B_with_base.coords.usrCoords[1],
+          Int_of_B_with_base.coords.usrCoords[2],
+        ];
+
+        sides = triangle.borders;
+        let base_point_of_A_onside;
+
+        // base_point_of_A_onside=JXG.Math.Geometry.meetLineLine(selectedBase.stdform,Base_of_A);
+
+        // console.log(base_point_of_A_onside);
+        // console.log(sides[0].stdform);
+
+        A_to_base = JXG.Math.Geometry.distance(endpoint1_of_base, A);
+
+        B_to_base = JXG.Math.Geometry.distance(endpoint2_of_base, B);
+
+        let ratio;
+        let ratio1 = A_to_base / A_to_vertex;
+        let ratio2 = B_to_base / B_to_vertex;
+
+        console.log(A_to_base);
+        console.log(A_to_vertex);
+        console.log(B_to_base);
+        console.log(B_to_vertex);
+
+        ratio = ratio1 / ratio2;
+        console.log(ratio);
+
+        document.getElementById("ratio1").innerHTML = ratio1.toFixed(2);
+        document.getElementById("ratio2").innerHTML = ratio2.toFixed(2);
+
+        calculateRatio = document.getElementById("ratio-btn");
+        calculateRatio.className = "disableButton";
+        simTable = document.getElementsByClassName("sim-table");
+        console.log(simTable);
+        simTable[0].style.visibility = "visible";
+      }
+    </script>
+  </body>
+</html>
