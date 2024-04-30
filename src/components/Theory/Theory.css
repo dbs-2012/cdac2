@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,600;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=GFS+Didot&display=swap");
 .theory-card {
   margin: 4%;
   background-color: #B1D4E0;
@@ -34,7 +35,7 @@
   align-items: center;
 }
 .theory-card .theory-image img {
-  width: 35%;
+  width: 20%;
 }
 .theory-card .theory-headings {
   color: red;
@@ -67,14 +68,16 @@
   border-radius: 10px;
   background-color: rgb(4, 4, 49);
   cursor: pointer;
-  padding: 1% 2%;
   margin-bottom: 20px;
+  padding: 1% 2%;
 }
 .theory-btn button a {
   text-decoration: none;
   color: white;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-family: "GFS Didot", serif;
   font-weight: 600;
+  letter-spacing: 0.2rem;
 }
 .theory-btn button:hover {
   background-color: rgb(9, 9, 88);

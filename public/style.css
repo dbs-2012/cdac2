@@ -1,79 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Kablammo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lumanosimo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=GFS+Didot&display=swap');
+
 .sim-container{
-    position: relative;
     display: grid;
-    grid-template-columns: 70% auto;
-    border: 1px solid grey;
+    grid-template-columns: 65% auto;
     height: max-content;
 }
 
 .sim-display-container{
     text-align: center;
-    border: 1px solid hotpink;
     position: relative;
 }
 
 #jxgbox{
     position: absolute;
-    top: 10%;
-    left: 12%;
-    border: 1px solid red;
+    top: 12%;
+    left: 14%;
     height: max-content;
     text-align: center;
     justify-content: center;
     align-items: center;
+    max-width: 70%;
+    box-shadow: 5px 5px 15px 10px rgb(229, 228, 228);
 }
 
 .sim-calculations{
     float: right;
-    border: 1px solid green;
     width: 100%;
     display: inline;
-    height: 97vh;
+    height: 96vh;
+    border-left: 1px solid #0C2D48;
+    border: 1px solid black;
+}
+
+.sim-table-container{
+    border-bottom: 1px solid #0C2D48;
 }
 
 .sim-table{
-    height: 44vh;
-    border: 1px solid black;
+    height: 60vh;
+    padding: 0 5%;
+    /* display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; */
+    text-align: center;
+    visibility: hidden;
+}
+
+.sim-final-calculation{
+    display: flex;
+}
+
+.sim-final{
+    width: 40%;
+    text-align: center;
+    padding: 2% 4%;
+    font-size: 1.2rem;
+    font-family: 'GFS Didot', serif;
+    font-weight: 400;
+}
+
+.sim-final-equal{
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-family: 'GFS Didot', serif;
+    font-weight: 400;
+}
+
+.firstRatio{
+    border-bottom: 1px solid black;
+}
+
+.sim-final-calculated-ratio-text{
+    font-size: 1.2rem;
+    font-family: 'GFS Didot', serif;
+    font-weight: 400;
+    text-align: left;
+    padding: 4%;
+    padding-top: 6%;
+    /* border-bottom: 1px solid #0C2D48; */
+    /* border-style: dashed; */
+}
+
+.sim-final-calculated-ratio{
+    font-size: 1.2rem;
+    font-family: 'GFS Didot', serif;
+    font-weight: 400;
+}
+
+/* #firstRatio{
+    border-bottom: 1px solid #0C2D48;
+} */
+
+#ratio1-cal{
+    border-bottom: 1px solid #0C2D48;
+    padding-top: 3%;
+}
+
+.sim-inputs-container{
+    display: flex;
+}
+
+.sim-inputs-cont{
+    width: 50%;
+}
+
+.sim-inputs-container-labels{
+    padding: 4% 2%;
+    text-align: left;
+}
+
+.sim-inputs-container-labels label{
+    font-size: 1.1rem;
+    font-family: 'GFS Didot', serif;
+    font-weight: 400;
+}
+
+.calculateRatioButton{
+    margin: 4% auto;
+}
+
+.sim-inputs-container-labels input{
+    margin-left: 3%;
+    /* padding: 0.2%; */
+    padding: 1% 3%;
+    border-radius: 5px;
+    font-family: 'open Sans', serif;
+    width: 50%;
+    font-size: 1rem;
+    height: 2vh;
+}
+
+.coordinates{
+    margin: 2%;
+    display: flex;
 }
 
 .point-names{
     text-align: center;
-    padding: 2%;
     font-family: 'open Sans', serif;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     font-weight: 500;
-}
-
-.point-coordinates{
-    margin: 0 10%;
-    margin-left: 15%;
-}
-
-.xy-coordinates{
-    margin-right: 7.5px;
-    font-family: 'open Sans', serif;
-}
-
-.sim-inputs{
-    margin-left: 7.5px;
-    padding: 2.5px;
-    padding-left: 7px;
-    border-radius: 5px;
-    font-family: 'open Sans', serif;
+    font-family: 'Kablammo', cursive;
+    font-weight: 400;
+    width: 20%;
 }
 
 .points{
-    margin-top: 10px;
+    display: grid;
+    grid-template-columns: auto auto;
+    margin-top: 1%;
+    width: 80%;
 }
 
-.coordinates{
-    margin-bottom: 10px;
-    margin-top: 10px;
+.point-coordinates{
+    text-align: center;
+}
+
+.point-coordinates label{
+    font-size: 1.2rem;
+    font-family: 'Lumanosimo', cursive;
+    font-weight: 400;
+}
+
+.sim-inputs{
+    margin-left: 2%;
+    padding: 0.5%;
+    padding: 1% 3%;
+    border-radius: 5px;
+    font-family: 'open Sans', serif;
+    width: 50%;
+    font-size: 1rem;
 }
 
 .simulator-button{
     padding: 2% 4%;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 1.2rem;
     font-family: 'open Sans', serif;
     cursor: pointer;
@@ -81,7 +188,7 @@
     color: whitesmoke;
     border: none;
     box-shadow: 2px 5px 10px 2px grey;
-    margin-top: 10px;
+    margin-top: 2%;
 }
 
 #drawButton{
@@ -90,16 +197,152 @@
     justify-content: center;
 }
 
+.disableButton{
+    padding: 2% 4%;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-family: 'open Sans', serif;
+    cursor: pointer;
+    background-color: rgb(83, 92, 99);
+    color: whitesmoke;
+    border: none;
+    box-shadow: 2px 5px 10px 2px grey;
+    margin-top: 2%;
+    cursor: not-allowed;
+}
+
 .sim-ratios{
     display: grid;
     grid-template-columns: auto auto;
-    margin-top: 10px;
+    margin-top: 2%;
 }
 
-.sim-ratios span{
+.btn-calculation{
     text-align: center;
 }
 
-.sim-ratios span button{
+.btn-calculation button{
     padding: 4% 8%;
+}
+
+.left-sidebar-container{
+    float: left;
+    width: 25%;
+    height: 95.8vh;
+    box-shadow: 5px 5px 10px 10px rgb(226, 226, 226);
+}
+
+.left-sidebar{
+    padding: 5%;
+    padding-bottom: 2%;
+}
+
+.middle-bar{
+    height: 60vh;
+    width: 75%;
+    display: flex;
+    background-color: aliceblue;
+}
+
+.step-number{
+    text-align: center;
+    margin-top: 2%;
+    margin-bottom: 3%;
+    font-family: 'Lumanosimo', cursive;
+    font-weight: 1000;
+}
+
+.steps-slideshow-container{
+    height: 30vh;
+    padding: 2%;
+    font-size: 1.3rem;
+    font-family: 'GFS Didot', serif;
+    font-weight: 400;
+}
+
+.steps-container{
+    padding: 5%;
+}
+
+.left-sidebar-buttons{
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.next{
+    text-align: end;
+}
+
+.collapsible {
+    background-color: #0C2D48;
+    margin-top: 8%;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-size: 1.2rem;
+    font-family: 'GFS Didot', serif;
+    font-weight: 600;
+    letter-spacing: 0.12rem;
+  }
+  
+  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+  .active, .collapsible:hover {
+    background-color: #0C2D48;
+  }
+  
+  /* Style the collapsible content. Note: hidden by default */
+  .content {
+    border-radius: 20px;
+    max-height: 250px;
+    overflow-y: scroll;
+    font-size: 1.1rem;
+    font-family: 'GFS Didot', serif;
+    font-weight: 400;
+    padding: 0 18px;
+    display: none;
+    background-color: white;
+    scrollbar-color: #0C2D48;
+  }
+
+.side-buttons{
+    padding: 4% 8%;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-family: 'GFS Didot', serif;
+    font-weight: 400;
+    cursor: pointer;
+    background-color: #0C2D48;
+    color: whitesmoke;
+    box-shadow: 2px 5px 10px 2px grey;
+}
+
+.display-all-steps-container{
+    margin: 5% auto;
+    padding: 5%;
+    border-top: 1px solid #0C2D48;
+}
+
+.display-steps-button{
+    text-align: center;
+}
+
+.all-steps-container li{
+    margin-top: 2%;
+    font-size: 1.1rem;
+    font-family: 'GFS Didot', serif;
+    font-weight: 400;
+    list-style: upper-roman;
+}
+
+.all-steps-container{
+    margin: 7% 4%;
+    overflow-y: scroll;
+    height: 38vh;
 }

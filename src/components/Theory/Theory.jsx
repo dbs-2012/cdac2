@@ -1,6 +1,11 @@
 import React from 'react'
 import './Theory.css'
 import { Link } from 'react-router-dom'
+import Image from '../../images/proof.png'
+import Image2 from '../../images/proof2.png'
+import Image3 from '../../images/proof3.png'
+import Image4 from '../../images/proof4.png'
+import Image5 from '../../images/proof5.png'
 
 const Theory = () => {
     return (
@@ -29,7 +34,7 @@ const Theory = () => {
                     </div>
                 </div>
                 <div className="theory-image">
-                    <img src="https://cdn1.byjus.com/wp-content/uploads/2020/10/Basic-Proportionality-Theorem-Similar-TrianglesArtboard-1-8.png" alt="Proof 1" />
+                    <img src={Image} alt="Proof 1" />
                 </div>
                 <div className="theory-body-container">
                     <div className="theory-body">
@@ -48,7 +53,7 @@ const Theory = () => {
                     </div>
                 </div>
                 <div className="theory-image">
-                    <img src="https://cdn1.byjus.com/wp-content/uploads/2020/10/Basic-Proportionality-Theorem-Similar-TrianglesArtboard-1-copy-8.png" alt="Proof 2" />
+                    <img src={Image2} alt="Proof 2" />
                 </div>
                 <div className="theory-body-container theory-headings">
                     <div className="theory-body">
@@ -257,7 +262,7 @@ const Theory = () => {
                     </div>
                 </div>
                 <div className="theory-image">
-                    <img src="https://cdn1.byjus.com/wp-content/uploads/2020/10/Basic-Proportionality-Theorem-Similar-TrianglesArtboard-1-copy-2-8.png" alt="Midpoint Theorem" />
+                    <img src={Image3} alt="Midpoint Theorem" />
                 </div>
                 <div className="theory-body-container theory-headings">
                     <div className="theory-body">
@@ -284,7 +289,7 @@ const Theory = () => {
                     </div>
                 </div>
                 <div className="theory-image">
-                    <img src="https://cdn1.byjus.com/wp-content/uploads/2020/10/Basic-Proportionality-Theorem-Similar-TrianglesArtboard-1-copy-3-8.png" alt="Converse of Basic Proportionality Theorem" />
+                    <img src={Image4} alt="Converse of Basic Proportionality Theorem" />
                 </div>
                 <div className="theory-body-container theory-headings">
                     <div className="theory-body">
@@ -323,7 +328,7 @@ const Theory = () => {
                     </div>
                 </div>
                 <div className="theory-image">
-                    <img src="https://cdn1.byjus.com/wp-content/uploads/2020/10/Basic-Proportionality-Theorem-Similar-TrianglesArtboard-1-copy-4-8.png" alt="Example-1" />
+                    <img src={Image5} alt="Example-1" />
                 </div>
                 <div className="theory-body-container theory-headings">
                     <div className="theory-body">
